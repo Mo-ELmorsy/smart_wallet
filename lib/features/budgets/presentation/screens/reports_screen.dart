@@ -4,6 +4,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:smart_wallet/features/transactions/domain/models/transaction_type.dart';
 import 'package:smart_wallet/features/transactions/presentation/providers/transactions_provider.dart';
 
+import 'package:smart_wallet/features/budgets/domain/services/pdf_export_service.dart';
+
 class ReportsScreen extends ConsumerWidget {
   const ReportsScreen({super.key});
 
@@ -14,6 +16,40 @@ class ReportsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reports'),
+        actions: [
+          transactionsAsync.maybeWhen(
+            data: (transactions) => IconButton(
+              icon: const Icon(Icons.picture_as_pdf),
+              tooltip: 'Export PDF',
+              onPressed: () {
+                final now = DateTime.now();
+                double totalIncome = 0;
+                double totalExpense = 0;
+                final Map<String, double> categoryExpenses = {};
+                final currentMonthTx = transactions.where((tx) => tx.date.month == now.month && tx.date.year == now.year).toList();
+
+                for (var tx in currentMonthTx) {
+                  if (tx.type == TransactionType.income) {
+                    totalIncome += tx.amount;
+                  } else if (tx.type == TransactionType.expense) {
+                    totalExpense += tx.amount;
+                    final catName = tx.categoryName ?? 'Unknown';
+                    categoryExpenses[catName] = (categoryExpenses[catName] ?? 0) + tx.amount;
+                  }
+                }
+
+                PdfExportService.exportMonthlyReport(
+                  month: now,
+                  totalIncome: totalIncome,
+                  totalExpense: totalExpense,
+                  categoryExpenses: categoryExpenses,
+                  transactions: currentMonthTx,
+                );
+              },
+            ),
+            orElse: () => const SizedBox.shrink(),
+          ),
+        ],
       ),
       body: transactionsAsync.when(
         data: (transactions) {

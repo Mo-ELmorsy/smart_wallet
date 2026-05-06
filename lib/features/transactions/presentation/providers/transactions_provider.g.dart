@@ -7,7 +7,7 @@ part of 'transactions_provider.dart';
 // **************************************************************************
 
 String _$transactionsNotifierHash() =>
-    r'e5e0db2c893e61b2dd6875672714a71dd7b3f3a8';
+    r'9d99b3d02842a31c07b05be62e377a9ca79ad16a';
 
 /// See also [TransactionsNotifier].
 @ProviderFor(TransactionsNotifier)
@@ -24,7 +24,7 @@ final transactionsNotifierProvider = AutoDisposeAsyncNotifierProvider<
 
 typedef _$TransactionsNotifier = AutoDisposeAsyncNotifier<List<Transaction>>;
 String _$dashboardSummaryNotifierHash() =>
-    r'64cea58ecf078caae56e13e20d26aaac366b7b36';
+    r'740e67e046c07ebb10153b137ff62a25170e1168';
 
 /// See also [DashboardSummaryNotifier].
 @ProviderFor(DashboardSummaryNotifier)

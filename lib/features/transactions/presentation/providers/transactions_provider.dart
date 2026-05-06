@@ -39,6 +39,15 @@ class TransactionsNotifier extends _$TransactionsNotifier {
       (r) => ref.invalidateSelf(),
     );
   }
+
+  Future<void> updateTransaction(Transaction transaction) async {
+    final repo = getIt<TransactionRepository>();
+    final result = await repo.updateTransaction(transaction);
+    result.fold(
+      (l) => throw Exception(l.message),
+      (r) => ref.invalidateSelf(),
+    );
+  }
 }
 
 @riverpod

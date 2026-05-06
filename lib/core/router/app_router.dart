@@ -12,6 +12,8 @@ import 'package:smart_wallet/core/router/main_shell.dart';
 import 'package:smart_wallet/features/transactions/presentation/screens/dashboard_screen.dart';
 import 'package:smart_wallet/features/transactions/presentation/screens/transactions_screen.dart';
 import 'package:smart_wallet/features/transactions/presentation/screens/add_transaction_screen.dart';
+import 'package:smart_wallet/features/transactions/presentation/screens/edit_transaction_screen.dart';
+import 'package:smart_wallet/features/insights/presentation/screens/insights_screen.dart';
 
 // Phase 5 placeholders until implemented
 import 'package:smart_wallet/features/budgets/presentation/screens/budgets_screen.dart';
@@ -79,6 +81,19 @@ GoRouter appRouter(AppRouterRef ref) {
         path: '/transactions/add',
         name: 'add_transaction',
         builder: (context, state) => const AddTransactionScreen(),
+      ),
+      GoRoute(
+        path: '/transactions/edit/:id',
+        name: 'edit_transaction',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return EditTransactionScreen(transactionId: id);
+        },
+      ),
+      GoRoute(
+        path: '/insights',
+        name: 'insights',
+        builder: (context, state) => const InsightsScreen(),
       ),
       GoRoute(
         path: '/settings',

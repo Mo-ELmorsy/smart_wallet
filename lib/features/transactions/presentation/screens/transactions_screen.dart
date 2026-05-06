@@ -160,6 +160,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
             fontSize: 16,
           ),
         ),
+        onTap: () => context.push('/transactions/edit/${tx.id}'),
       ),
     );
   }

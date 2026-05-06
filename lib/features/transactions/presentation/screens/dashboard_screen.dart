@@ -85,7 +85,7 @@ class DashboardScreen extends ConsumerWidget {
                           fontSize: 16,
                         ),
                       ),
-                      onTap: () {}, // Can add edit logic here
+                      onTap: () => context.push('/transactions/edit/${tx.id}'),
                     );
                   },
                   childCount: recent.length,
@@ -97,10 +97,29 @@ class DashboardScreen extends ConsumerWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextButton(
-                onPressed: () => context.go('/transactions'),
-                child: const Text('View All Transactions'),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () => context.go('/transactions'),
+                      icon: const Icon(Icons.list),
+                      label: const Text('All Transactions'),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () => context.push('/insights'),
+                      icon: const Icon(Icons.auto_awesome),
+                      label: const Text('AI Insights'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.purple.shade50,
+                        foregroundColor: Colors.purple,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

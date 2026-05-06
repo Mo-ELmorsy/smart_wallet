@@ -29,6 +29,14 @@ import '../../features/budgets/domain/models/budget.dart' as _i998;
 import '../../features/budgets/domain/models/goal.dart' as _i490;
 import '../../features/budgets/domain/repositories/budget_repository.dart'
     as _i1021;
+import '../../features/insights/data/datasources/gemini_data_source.dart'
+    as _i716;
+import '../../features/insights/data/repositories/insights_repository_impl.dart'
+    as _i517;
+import '../../features/insights/domain/repositories/insights_repository.dart'
+    as _i606;
+import '../../features/insights/domain/usecases/generate_monthly_insight_usecase.dart'
+    as _i1070;
 import '../../features/transactions/data/datasources/transaction_local_data_source.dart'
     as _i371;
 import '../../features/transactions/data/repositories/transaction_repository_impl.dart'
@@ -124,6 +132,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i421.TransactionRepository>(() =>
         _i443.TransactionRepositoryImpl(
             gh<_i371.TransactionLocalDataSource>()));
+    gh.lazySingleton<_i716.GeminiDataSource>(
+        () => _i716.GeminiDataSourceImpl(gh<_i460.SharedPreferences>()));
+    gh.lazySingleton<_i606.InsightsRepository>(
+        () => _i517.InsightsRepositoryImpl(gh<_i716.GeminiDataSource>()));
+    gh.factory<_i1070.GenerateMonthlyInsightUseCase>(() =>
+        _i1070.GenerateMonthlyInsightUseCase(gh<_i606.InsightsRepository>()));
     gh.factory<_i5.AddTransactionUseCase>(
         () => _i5.AddTransactionUseCase(gh<_i421.TransactionRepository>()));
     gh.factory<_i645.DeleteTransactionUseCase>(() =>

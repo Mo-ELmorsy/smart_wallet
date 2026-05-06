@@ -23,8 +23,15 @@ class AuthState with _$AuthState {
 class AuthController extends _$AuthController {
   @override
   AuthState build() {
-    _loadInitialState();
-    return const AuthState();
+    Future.microtask(_loadInitialState);
+    return const AuthState(
+      isLoading: true,
+      hasCompletedOnboarding: false,
+      isPinEnabled: false,
+      isBiometricEnabled: false,
+      canUseBiometrics: false,
+      isAuthenticated: false,
+    );
   }
 
   Future<void> _loadInitialState() async {

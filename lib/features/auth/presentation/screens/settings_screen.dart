@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_wallet/features/auth/presentation/providers/auth_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -54,8 +55,65 @@ class SettingsScreen extends ConsumerWidget {
                 }
               },
             ),
+          const Divider(),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'AI Insights',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.purple),
+            ),
+          ),
+          ListTile(
+            title: const Text('Gemini API Key'),
+            subtitle: const Text('Enter your API key to generate financial insights.'),
+            trailing: const Icon(Icons.edit),
+            onTap: () => _showApiKeyDialog(context),
+          ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showApiKeyDialog(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    final currentKey = prefs.getString('gemini_api_key') ?? '';
+    final controller = TextEditingController(text: currentKey);
+
+    if (!context.mounted) return;
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Gemini API Key'),
+          content: TextField(
+            controller: controller,
+            decoration: const InputDecoration(
+              hintText: 'Enter your API key',
+              border: OutlineInputBorder(),
+            ),
+            obscureText: true,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await prefs.setString('gemini_api_key', controller.text);
+                if (context.mounted) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('API Key saved successfully.')),
+                  );
+                }
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
