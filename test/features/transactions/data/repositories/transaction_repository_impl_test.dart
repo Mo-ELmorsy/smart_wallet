@@ -5,7 +5,7 @@ import 'package:smart_wallet/features/transactions/data/datasources/transaction_
 import 'package:smart_wallet/features/transactions/data/repositories/transaction_repository_impl.dart';
 import 'package:smart_wallet/features/transactions/domain/models/transaction.dart';
 import 'package:smart_wallet/features/transactions/domain/models/transaction_type.dart';
-import 'package:smart_wallet/features/transactions/domain/models/category.dart';
+
 import 'transaction_repository_impl_test.mocks.dart';
 
 @GenerateMocks([TransactionLocalDataSource])

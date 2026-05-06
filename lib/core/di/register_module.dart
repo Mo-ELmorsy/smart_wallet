@@ -1,5 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_wallet/core/utils/constants.dart';
 import 'package:smart_wallet/features/transactions/domain/models/transaction.dart';
 import 'package:smart_wallet/features/transactions/domain/models/category.dart';
